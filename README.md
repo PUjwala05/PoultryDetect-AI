@@ -61,32 +61,18 @@ poultry_web_app/
 ## 📦 Installation & Setup
 
 ### 1️⃣ Clone the repository:
-
-```bash
 git clone https://github.com/PUjwala05/poultry-disease-classification.git
 cd poultry_web_app
 2️⃣ (Optional) Create a virtual environment:
-bash
-Copy
-Edit
 python -m venv venv
 venv\Scripts\activate   # On Windows
 # OR
 source venv/bin/activate  # On macOS/Linux
 3️⃣ Install dependencies:
-bash
-Copy
-Edit
 pip install tensorflow flask pillow numpy
 4️⃣ Train the model (only if you don’t have the .h5 file):
-bash
-Copy
-Edit
 python train_model.py
 5️⃣ Run the web application:
-bash
-Copy
-Edit
 python app.py
 Then open your browser and visit:
 📍 http://127.0.0.1:5000/
