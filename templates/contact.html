@@ -1,174 +1,347 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Contact - PoultryDetect</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | PoultryDetect</title>
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #ffffff;
-      min-height: 100vh;
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 40px;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(10px);
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    }
+        :root {
+            --navy: #102a56;
+            --blue: #2563eb;
+            --light-blue: #60a5fa;
+            --pale-blue: #eff6ff;
+            --text: #172554;
+        }
 
-    .navbar-left {
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #4CAF50;
-    }
+        body {
+            min-height: 100vh;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--text);
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+        }
 
-    .navbar-center a {
-      margin: 0 15px;
-      color: #f0f0f0;
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s, transform 0.3s;
-    }
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 16px 6%;
+            background: linear-gradient(100deg, #102a56, #1d4ed8);
+            box-shadow: 0 4px 18px rgba(16, 42, 86, 0.2);
+        }
 
-    .navbar-center a:hover {
-      color: #4CAF50;
-      transform: translateY(-2px);
-    }
+        .navbar-left {
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
 
-    .content {
-      padding: 120px 20px 60px 20px;
-      max-width: 800px;
-      margin: auto;
-      text-align: center;
-      animation: fadeIn 1s ease;
-    }
+        .navbar-center {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
 
-    h1 {
-      font-size: 2.8em;
-      margin-bottom: 20px;
-    }
+        .navbar-center a {
+            color: #eff6ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
 
-    p {
-      font-size: 1.15em;
-      line-height: 1.6;
-      margin-bottom: 40px;
-      color: #ddd;
-    }
+        .navbar-center a:hover {
+            color: #93c5fd;
+        }
 
-    form {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(8px);
-      transition: transform 0.3s;
-    }
+        /* Main content */
+        .content {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 55px 20px 70px;
+            animation: fadeIn 0.7s ease;
+        }
 
-    input, textarea {
-      width: 100%;
-      padding: 12px 15px;
-      margin-bottom: 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1em;
-      background-color: #ffffff10;
-      color: white;
-      transition: background 0.3s, transform 0.2s;
-    }
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-    input:focus, textarea:focus {
-      outline: none;
-      background-color: #ffffff20;
-      transform: scale(1.02);
-    }
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 14px;
+            padding: 7px 15px;
+            color: #1d4ed8;
+            background: #dbeafe;
+            border: 1px solid #bfdbfe;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
 
-    button {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 14px 28px;
-      font-size: 1.1em;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
+        h1 {
+            margin-bottom: 15px;
+            color: var(--navy);
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+        }
 
-    button:hover {
-      background-color: #45a049;
-      transform: translateY(-2px);
-    }
+        .intro {
+            max-width: 650px;
+            margin: 0 auto;
+            color: #475569;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        /* Contact form */
+        .contact-card {
+            padding: 32px;
+            background: #ffffff;
+            border: 1px solid #bfdbfe;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.12);
+        }
 
-    @media (max-width: 600px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 14px 20px;
-      }
+        .contact-card h2 {
+            margin-bottom: 8px;
+            color: #1d4ed8;
+            font-size: 1.5rem;
+        }
 
-      .navbar-center {
-        margin-top: 10px;
-        display: flex;
-        flex-wrap: wrap;
-      }
+        .form-description {
+            margin-bottom: 24px;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
 
-      .navbar-center a {
-        margin: 5px 10px;
-      }
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-      h1 {
-        font-size: 2em;
-      }
-    }
-  </style>
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+
+        input,
+        textarea {
+            display: block;
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #bfdbfe;
+            border-radius: 10px;
+            background: #f8fbff;
+            color: #172554;
+            font: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            display: inline-block;
+            width: 100%;
+            padding: 14px 24px;
+            color: white;
+            background: linear-gradient(110deg, #2563eb, #1d4ed8);
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        .contact-note {
+            margin-top: 22px;
+            color: #64748b;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            padding: 22px;
+            color: #dbeafe;
+            background: #102a56;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                justify-content: center;
+            }
+
+            .navbar-left {
+                width: 100%;
+                text-align: center;
+            }
+
+            .navbar-center {
+                justify-content: center;
+                gap: 14px;
+            }
+
+            .content {
+                padding: 35px 16px 50px;
+            }
+
+            .contact-card {
+                padding: 23px 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-  <!-- Navbar -->
-  <div class="navbar">
-    <div class="navbar-left">🐔 PoultryDetect</div>
-    <div class="navbar-center">
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-      <a href="/predict_page">Predict</a>
-    </div>
-  </div>
+    <nav class="navbar">
+        <div class="navbar-left">🐔 PoultryDetect</div>
 
-  <!-- Page Content -->
-  <div class="content">
-    <h1>Contact Us</h1>
-    <p>
-      If you have any questions, suggestions, or would like to get involved with our Poultry Disease Detection project,
-      please reach out using the form below.
-    </p>
+        <div class="navbar-center">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/predict_page">Predict</a>
+        </div>
+    </nav>
 
-    <form>
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <textarea placeholder="Your Message" rows="5" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-  </div>
+    <main class="content">
+        <header class="heading">
+            <span class="eyebrow">We're here to help</span>
+
+            <h1>Contact Us</h1>
+
+            <p class="intro">
+                Have questions or suggestions about PoultryDetect?
+                We'd love to hear your feedback about this AI-powered
+                poultry disease classification project.
+            </p>
+        </header>
+
+        <section class="contact-card">
+            <h2>Send Us a Message</h2>
+
+            <p class="form-description">
+                Fill in the details below to prepare your message.
+            </p>
+
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your name"
+                        autocomplete="name"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Your Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        placeholder="Write your message here..."
+                        required></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    Prepare Message
+                </button>
+            </form>
+
+            <p class="contact-note" id="formStatus" role="status"
+               aria-live="polite">
+                This form currently prepares a message; it does not send or store it.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        PoultryDetect · AI-powered poultry disease classification
+    </footer>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const message = document.getElementById("message").value.trim();
+
+            if (!name || !email || !message) {
+                document.getElementById("formStatus").textContent =
+                    "Please complete all fields.";
+                return;
+            }
+
+            document.getElementById("formStatus").textContent =
+                "Thank you, " + name +
+                ". Your message is ready, but this demo does not send it anywhere.";
+        });
+    </script>
 
 </body>
 </html>

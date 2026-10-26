@@ -1,8 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Home - Poultry Disease Detection</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - PoultryDetect</title>
+
   <style>
     * {
       box-sizing: border-box;
@@ -10,104 +13,183 @@
       padding: 0;
     }
 
-    body {
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #f0f0f0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      min-height: 100vh;
-      overflow-x: hidden;
+    :root {
+      --navy: #102a56;
+      --blue: #2563eb;
+      --light-blue: #60a5fa;
+      --pale-blue: #eff6ff;
+      --white: #ffffff;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--navy);
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    }
+
+    /* Navigation */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 14px 40px;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(10px);
-      position: fixed;
-      width: 100%;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 16px 6%;
+      background: linear-gradient(100deg, #102a56, #1d4ed8);
+      box-shadow: 0 4px 18px rgba(16, 42, 86, 0.2);
+      position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     .navbar-left {
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #4CAF50;
+      color: white;
+      font-size: 1.65rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .navbar-center {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .navbar-center a {
-      margin: 0 15px;
-      color: #f0f0f0;
+      color: #eaf2ff;
       text-decoration: none;
       font-weight: 600;
-      transition: color 0.3s, transform 0.3s;
+      padding: 8px 13px;
+      border-radius: 8px;
+      transition: background 0.25s, color 0.25s;
     }
 
-    .navbar-center a:hover {
-      color: #4CAF50;
-      transform: translateY(-2px);
+    .navbar-center a:hover,
+    .navbar-center a:focus-visible {
+      color: white;
+      background: rgba(255, 255, 255, 0.16);
     }
 
+    /* Hero section */
     .content {
-      margin-top: 100px;
-      padding: 60px 20px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 75px 24px 85px;
       text-align: center;
-      animation: fadeIn 1s ease-in;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 15px;
+      margin-bottom: 18px;
+      color: #1d4ed8;
+      background: #dbeafe;
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
     }
 
     h1 {
-      font-size: 2.8em;
-      margin-bottom: 30px;
-      color: #ffffff;
+      max-width: 850px;
+      margin: 0 auto 18px;
+      color: var(--navy);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 1.15;
+      letter-spacing: -1.5px;
     }
 
+    .hero-description {
+      max-width: 680px;
+      margin: 0 auto 36px;
+      color: #475569;
+      font-size: 1.1rem;
+    }
+
+    /* Poultry image gallery */
     .image-gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      max-width: 1000px;
-      margin: 0 auto 50px auto;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
+      margin: 0 auto 38px;
+    }
+
+    .image-card {
+      overflow: hidden;
+      background: white;
+      border: 1px solid #bfdbfe;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.1);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .image-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 35px rgba(37, 99, 235, 0.18);
     }
 
     .image-gallery img {
+      display: block;
       width: 100%;
-      height: 160px;
+      height: 205px;
       object-fit: cover;
-      border-radius: 12px;
-      border: 2px solid #ffffff30;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .image-gallery img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    }
-
+    /* Primary button */
     a.button {
-      display: inline-block;
-      background: #4CAF50;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 32px;
       color: white;
-      padding: 14px 32px;
-      font-size: 1.2em;
-      border-radius: 8px;
+      background: linear-gradient(110deg, #2563eb, #1d4ed8);
+      border: 1px solid #2563eb;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.24);
+      font-size: 1.05rem;
+      font-weight: 700;
       text-decoration: none;
-      font-weight: bold;
-      transition: background-color 0.3s ease, transform 0.3s ease;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     a.button:hover {
-      background-color: #45a049;
       transform: translateY(-3px);
+      box-shadow: 0 12px 26px rgba(37, 99, 235, 0.32);
+    }
+
+    a.button:focus-visible {
+      outline: 3px solid #93c5fd;
+      outline-offset: 4px;
+    }
+
+    .feature-note {
+      margin-top: 25px;
+      color: #64748b;
+      font-size: 0.92rem;
+    }
+
+    /* Footer */
+    footer {
+      padding: 22px 16px;
+      color: #dbeafe;
+      background: #102a56;
+      text-align: center;
+      font-size: 0.9rem;
     }
 
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(12px);
       }
       to {
         opacity: 1;
@@ -115,58 +197,129 @@
       }
     }
 
-    /* Responsive padding */
-    @media (max-width: 600px) {
+    /* Responsive layout */
+    @media (max-width: 850px) {
+      .image-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .image-gallery img {
+        height: 190px;
+      }
+    }
+
+    @media (max-width: 560px) {
       .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 14px 20px;
+        justify-content: center;
+        padding: 14px 12px;
+      }
+
+      .navbar-left {
+        width: 100%;
+        text-align: center;
       }
 
       .navbar-center {
-        margin-top: 10px;
-        display: flex;
-        flex-wrap: wrap;
+        justify-content: center;
+        gap: 4px;
       }
 
       .navbar-center a {
-        margin: 5px 10px;
+        padding: 7px 9px;
+        font-size: 0.9rem;
       }
 
-      h1 {
-        font-size: 2em;
+      .content {
+        padding: 45px 16px 55px;
       }
 
       .image-gallery {
-        padding: 0 10px;
+        gap: 12px;
+      }
+
+      .image-gallery img {
+        height: 145px;
+      }
+
+      .hero-description {
+        font-size: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
       }
     }
   </style>
 </head>
-<body>
 
-  <div class="navbar">
+<body>
+  <nav class="navbar">
     <div class="navbar-left">🐔 PoultryDetect</div>
+
     <div class="navbar-center">
       <a href="/">Home</a>
       <a href="/about">About</a>
       <a href="/contact">Contact</a>
       <a href="/predict_page">Predict</a>
     </div>
-  </div>
+  </nav>
 
-  <div class="content">
-    <h1>Poultry Disease Detection </h1>
+  <main class="content">
+    <div class="eyebrow">AI-Powered Poultry Technology</div>
 
-    <div class="image-gallery">
-      <img src="{{ url_for('static', filename='images/img1.jpg') }}" alt="Image 1" />
-      <img src="{{ url_for('static', filename='images/img2.jpg') }}" alt="Image 2" />
-      <img src="{{ url_for('static', filename='images/img3.jpg') }}" alt="Image 3" />
-      <img src="{{ url_for('static', filename='images/img4.jpg') }}" alt="Image 4" />
-    </div>
+    <h1>Poultry Disease Detection</h1>
 
-    <a href="/predict_page" class="button">Start Detection</a>
-  </div>
+    <p class="hero-description">
+      Explore an image-based poultry disease classification project
+      designed to demonstrate how artificial intelligence can assist
+      with poultry health screening.
+    </p>
 
+    <section class="image-gallery" aria-label="Poultry image gallery">
+      <div class="image-card">
+        <img
+          src="{{ url_for('static', filename='images/img1.jpg') }}"
+          alt="Poultry image 1"
+          loading="lazy">
+      </div>
+
+      <div class="image-card">
+        <img
+          src="{{ url_for('static', filename='images/img2.jpg') }}"
+          alt="Poultry image 2"
+          loading="lazy">
+      </div>
+
+      <div class="image-card">
+        <img
+          src="{{ url_for('static', filename='images/img3.jpg') }}"
+          alt="Poultry image 3"
+          loading="lazy">
+      </div>
+
+      <div class="image-card">
+        <img
+          src="{{ url_for('static', filename='images/img4.jpg') }}"
+          alt="Poultry image 4"
+          loading="lazy">
+      </div>
+    </section>
+
+    <a href="/predict_page" class="button">
+      Start Detection <span aria-hidden="true">→</span>
+    </a>
+
+    <p class="feature-note">
+      Image-based classification demonstration · AI-assisted project
+    </p>
+  </main>
+
+  <footer>
+    PoultryDetect · AI-powered poultry disease classification
+  </footer>
 </body>
 </html>

@@ -1,237 +1,465 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Prediction - PoultryDetect</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #4CAF50;
-      --text-light: #f2f2f2;
-      --glass: rgba(0, 0, 0, 0.4);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction | PoultryDetect</title>
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-      background: url("{{ url_for('static', filename='images/PoultryFarm_Background_1920x1080.png') }}") no-repeat center center fixed;
-      background-size: cover;
-      color: var(--text-light);
-      min-height: 100vh;
-      overflow-x: hidden;
-      animation: fadeIn 1.2s ease-in;
-    }
+        body {
+            min-height: 100vh;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: #172554;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+        }
 
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(40px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 16px 6%;
+            background: linear-gradient(100deg, #102a56, #1d4ed8);
+            box-shadow: 0 4px 18px #102a5625;
+        }
 
-    .navbar {
-      background-color: rgba(0,0,0,0.5);
-      backdrop-filter: blur(8px);
-      padding: 16px 50px;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    }
+        .brand {
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
 
-    .navbar-left {
-      font-size: 1.8em;
-      color: var(--primary);
-      font-weight: bold;
-    }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
 
-    .navbar-center a {
-      margin-left: 25px;
-      text-decoration: none;
-      color: var(--text-light);
-      font-weight: 600;
-      transition: all 0.3s;
-    }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
 
-    .navbar-center a:hover {
-      color: var(--primary);
-    }
+        .nav-links a:hover {
+            color: #93c5fd;
+        }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 140px 50px 60px;
-      animation: fadeIn 1s ease-in-out;
-    }
+        /* Page layout */
+        .container {
+            width: min(1100px, 100%);
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
 
-    h1 {
-      font-size: 3.2em;
-      margin-bottom: 30px;
-      text-align: center;
-    }
+        .heading {
+            text-align: center;
+            margin-bottom: 28px;
+        }
 
-    section {
-      background: var(--glass);
-      padding: 50px 60px;
-      margin: 50px 0;
-      border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-      animation: slideUp 0.8s ease-in-out;
-    }
+        .heading h1 {
+            color: #102a56;
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 8px;
+        }
 
-    @keyframes slideUp {
-      from { transform: translateY(50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+        .heading p {
+            color: #475569;
+        }
 
-    section h2 {
-      font-size: 2em;
-      margin-bottom: 20px;
-      text-align: center;
-    }
+        /* Camera and upload cards */
+        .panels {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            align-items: stretch;
+        }
 
-    .camera-preview {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+        .panel {
+            min-width: 0;
+            padding: 25px;
+            background: #ffffff;
+            border: 1px solid #bfdbfe;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px #2563eb12;
+            text-align: center;
+        }
 
-    button {
-      background-color: var(--primary);
-      color: white;
-      padding: 16px 32px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 1.1em;
-      transition: transform 0.2s, background-color 0.3s;
-    }
+        .panel h2 {
+            color: #1d4ed8;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
 
-    button:hover {
-      background-color: #388e3c;
-      transform: scale(1.05);
-    }
+        .panel p {
+            color: #64748b;
+            margin-bottom: 18px;
+        }
 
-    video, canvas {
-      margin-top: 20px;
-      width: 100%;
-      max-width: 500px;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-      display: block;
-    }
+        /* Upload form */
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
 
-    input[type="file"] {
-      background: white;
-      color: black;
-      padding: 12px;
-      border-radius: 6px;
-      margin-top: 20px;
-    }
+        input[type="file"] {
+            width: 100%;
+            max-width: 360px;
+            padding: 12px;
+            border: 1px solid #bfdbfe;
+            border-radius: 10px;
+            background: #f8fbff;
+            color: #334155;
+        }
 
-    .result {
-      background: var(--glass);
-      padding: 50px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-      text-align: center;
-      max-width: 700px;
-      margin: 60px auto 0 auto;
-    }
+        /* Buttons */
+        button {
+            padding: 12px 20px;
+            color: white;
+            background: linear-gradient(110deg, #2563eb, #1d4ed8);
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
 
-    .result h2 {
-      font-size: 2.4em;
-      color: var(--primary);
-      margin-bottom: 20px;
-      border-bottom: 3px solid var(--primary);
-      padding-bottom: 10px;
-    }
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px #2563eb30;
+        }
 
-    .result p {
-      font-size: 1.3em;
-      line-height: 1.8em;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-  </style>
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .secondary {
+            color: #1d4ed8;
+            background: #dbeafe;
+        }
+
+        /* Camera preview */
+        .camera-placeholder {
+            min-height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 18px;
+            color: #64748b;
+            background: #eff6ff;
+            border: 2px dashed #93c5fd;
+            border-radius: 14px;
+        }
+
+        #cameraVideo {
+            display: none;
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            margin-bottom: 18px;
+            border-radius: 14px;
+            background: #0f172a;
+        }
+
+        #cameraCanvas {
+            display: none;
+        }
+
+        .camera-actions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        #cameraMessage {
+            margin-top: 14px;
+            font-size: 0.9rem;
+            overflow-wrap: anywhere;
+        }
+
+        /* Prediction result directly below both cards */
+        .prediction-result {
+            grid-column: 1 / -1;
+            width: 100%;
+            padding: 25px;
+            background: linear-gradient(135deg, #ffffff, #dbeafe);
+            border: 2px solid #60a5fa;
+            border-radius: 18px;
+            box-shadow: 0 8px 24px #2563eb18;
+            text-align: center;
+        }
+
+        .prediction-result h2 {
+            color: #1d4ed8;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .prediction-result p {
+            margin: 9px 0;
+            color: #334155;
+            overflow-wrap: anywhere;
+        }
+
+        .prediction-label {
+            display: inline-block;
+            margin: 5px 0 12px;
+            padding: 8px 18px;
+            color: #1d4ed8;
+            background: #dbeafe;
+            border-radius: 999px;
+            font-weight: 800;
+        }
+
+        /* Information note */
+        .notice {
+            margin-top: 24px;
+            padding: 15px;
+            color: #1e3a8a;
+            background: #dbeafe;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            padding: 22px;
+            color: #dbeafe;
+            background: #102a56;
+            text-align: center;
+        }
+
+        @media (max-width: 720px) {
+            .navbar {
+                justify-content: center;
+            }
+
+            .brand {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 13px;
+            }
+
+            .container {
+                padding: 30px 15px;
+            }
+
+            .panels {
+                grid-template-columns: 1fr;
+            }
+
+            .panel {
+                padding: 22px 16px;
+            }
+
+            .prediction-result {
+                grid-column: auto;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <div class="navbar">
-    <div class="navbar-left">🐔 PoultryDetect</div>
-    <div class="navbar-center">
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-      <a href="/predict_page">Prediction</a>
-    </div>
-  </div>
+    <nav class="navbar">
+        <div class="brand">🐔 PoultryDetect</div>
 
-  <div class="container">
-    <h1>AI-Powered Disease Prediction</h1>
-
-    <section>
-      <h2>📷 Live Camera</h2>
-      <div class="camera-preview">
-        <button onclick="startCamera()">Start Camera</button>
-        <div id="camera-section" style="display:none; text-align:center;">
-          <video id="video" autoplay></video><br>
-          <button id="capture">Capture</button>
-          <canvas id="canvas" style="display:none;"></canvas>
-          <form method="POST" enctype="multipart/form-data" action="/predict">
-            <input type="hidden" name="imageData" id="imageData">
-            <br><button type="submit">Predict from Camera</button>
-          </form>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/predict_page">Predict</a>
         </div>
-      </div>
-    </section>
+    </nav>
 
-    <section>
-      <h2>🖼️ Upload Image</h2>
-      <form method="POST" enctype="multipart/form-data" action="/predict" style="text-align: center;">
-        <input type="file" name="file" accept="image/*" required>
-        <br><button type="submit">Predict from Upload</button>
-      </form>
-    </section>
+    <main class="container">
+        <header class="heading">
+            <h1>Poultry Disease Detection</h1>
+            <p>Upload a poultry image or use your camera.</p>
+        </header>
 
-    {% if predict %}
-    <div class="result">
-      <h2>🔍 Prediction Result</h2>
-      <p><strong>Disease Detected:</strong> {{ predict }}</p>
-      <p><strong>Treatment Recommendation:</strong> {{ treatment }}</p>
-      <p>This result is generated using advanced AI-based image recognition trained on poultry disease datasets. It aims to assist in early detection and response. Please consult a veterinary expert for professional treatment guidance.</p>
-    </div>
-    {% endif %}
-  </div>
+        <section class="panels">
 
-  <script>
-    function startCamera() {
-      document.getElementById('camera-section').style.display = 'block';
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
-          document.getElementById('video').srcObject = stream;
-        })
-        .catch(err => {
-          alert("Camera access denied or unavailable: " + err);
+            <!-- Live Camera Card -->
+            <div class="panel">
+                <h2>📷 Live Camera</h2>
+                <p>Start your camera to capture an image for prediction.</p>
+
+                <div class="camera-placeholder" id="cameraPlaceholder">
+                    Your camera preview will appear here.
+                </div>
+
+                <video id="cameraVideo" autoplay playsinline></video>
+                <canvas id="cameraCanvas"></canvas>
+
+                <div class="camera-actions">
+                    <button type="button" id="startCamera">
+                        Start Camera
+                    </button>
+
+                    <button type="button" id="captureImage" disabled>
+                        Capture & Predict
+                    </button>
+
+                    <button type="button" id="stopCamera"
+                            class="secondary" disabled>
+                        Stop Camera
+                    </button>
+                </div>
+
+                <p id="cameraMessage" role="status" aria-live="polite"></p>
+
+                <form id="cameraForm" action="/predict" method="POST"
+                      enctype="multipart/form-data" hidden>
+                    <input type="hidden" name="imageData" id="imageData">
+                </form>
+            </div>
+
+            <!-- Image Upload Card -->
+            <div class="panel">
+                <h2>🖼️ Upload Image</h2>
+                <p>Select a poultry image from your device.</p>
+
+                <form class="upload-form"
+                      action="/predict"
+                      method="POST"
+                      enctype="multipart/form-data">
+
+                    <input type="file"
+                           name="file"
+                           accept="image/*"
+                           required>
+
+                    <button type="submit">Predict from Upload</button>
+                </form>
+            </div>
+
+            <!-- Result appears immediately below both cards -->
+            {% if predict %}
+            <div class="prediction-result" id="predictionResult"
+                 aria-live="polite">
+                <h2>💙 Prediction Results</h2>
+
+                <p>Predicted Class</p>
+                <div class="prediction-label">{{ predict }}</div>
+
+                <p><strong>Suggested Next Step</strong></p>
+                <p>{{ treatment }}</p>
+            </div>
+            {% endif %}
+
+        </section>
+
+        <div class="notice">
+            This is an AI image-classification demonstration, not a veterinary diagnosis.
+            Consult a qualified veterinarian about poultry health concerns.
+        </div>
+    </main>
+
+    <footer>
+        PoultryDetect · AI-powered poultry disease classification
+    </footer>
+
+    <script>
+        const video = document.getElementById("cameraVideo");
+        const placeholder = document.getElementById("cameraPlaceholder");
+        const startButton = document.getElementById("startCamera");
+        const captureButton = document.getElementById("captureImage");
+        const stopButton = document.getElementById("stopCamera");
+        const canvas = document.getElementById("cameraCanvas");
+        const imageData = document.getElementById("imageData");
+        const cameraForm = document.getElementById("cameraForm");
+        const message = document.getElementById("cameraMessage");
+
+        let cameraStream = null;
+
+        startButton.addEventListener("click", async () => {
+            try {
+                if (!navigator.mediaDevices ||
+                    !navigator.mediaDevices.getUserMedia) {
+                    throw new Error("Camera is not supported by this browser.");
+                }
+
+                cameraStream = await navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: false
+                });
+
+                video.srcObject = cameraStream;
+                video.style.display = "block";
+                placeholder.style.display = "none";
+
+                startButton.disabled = true;
+                captureButton.disabled = false;
+                stopButton.disabled = false;
+
+                message.textContent = "Camera started successfully.";
+            } catch (error) {
+                message.textContent =
+                    "Camera unavailable. Check your browser's camera permission.";
+            }
         });
-    }
 
-    document.getElementById("capture").addEventListener("click", function () {
-      const video = document.getElementById("video");
-      const canvas = document.getElementById("canvas");
-      const context = canvas.getContext("2d");
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      document.getElementById("imageData").value = canvas.toDataURL("image/jpeg");
-      canvas.style.display = "block";
-    });
-  </script>
+        captureButton.addEventListener("click", () => {
+            if (!cameraStream || video.videoWidth === 0) {
+                message.textContent = "Wait until the camera preview appears.";
+                return;
+            }
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            const context = canvas.getContext("2d");
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            imageData.value = canvas.toDataURL("image/jpeg", 0.9);
+
+            stopCamera();
+            cameraForm.submit();
+        });
+
+        stopButton.addEventListener("click", stopCamera);
+
+        function stopCamera() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+
+            video.srcObject = null;
+            video.style.display = "none";
+            placeholder.style.display = "flex";
+
+            startButton.disabled = false;
+            captureButton.disabled = true;
+            stopButton.disabled = true;
+        }
+
+        window.addEventListener("pagehide", stopCamera);
+
+        // Bring the result into view after a prediction.
+        const result = document.getElementById("predictionResult");
+        if (result) {
+            result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+    </script>
 </body>
 </html>
